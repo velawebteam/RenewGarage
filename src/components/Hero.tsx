@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Car, ChevronRight } from "lucide-react";
-import heroVideo from "../assets/carro.mp4";
 
 export default function Hero() {
   return (
@@ -12,9 +11,10 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="auto"
           className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src="/carro.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
       </div>
