@@ -1,0 +1,6 @@
+{
+  "name": "Renew Garage",
+  "description": "Premium Car Detailing service in Tavira, Algarve specializing in paint correction, ceramic protection, and high-end detailing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
