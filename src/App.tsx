@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
-import Process from "./components/Process";
 import BeforeAfter from "./components/BeforeAfter";
 import Gallery from "./components/Gallery";
 import Testimonials from "./components/Testimonials";
@@ -18,7 +17,6 @@ const HomePage = () => (
   <main>
     <Hero />
     <Services />
-    <Process />
     <BeforeAfter />
     <Gallery />
     <Testimonials />
