@@ -1,15 +1,15 @@
 import { motion } from "motion/react";
 import { Car, ChevronRight } from "lucide-react";
-import heroVideo from "../assets/carro.mp4";
-
 export default function Hero() {
+  const videoPath = "/carro.mp4";
+
   return (
     <section className="relative h-screen flex items-end pb-6 md:pb-12 overflow-hidden">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-black">
         <video
-          key={heroVideo}
-          src={heroVideo}
+          key={videoPath}
+          src={videoPath}
           autoPlay
           muted
           loop
@@ -17,7 +17,7 @@ export default function Hero() {
           preload="auto"
           className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={videoPath} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
       </div>
