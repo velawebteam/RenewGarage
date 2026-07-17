@@ -1,4 +1,4 @@
-import { Shield, Droplets, Sparkles, Zap, Car, Thermometer, ChevronRight, ChevronLeft, MoveRight as DragHandle } from "lucide-react";
+import { Shield, Droplets, Sparkles, Zap, Car, Thermometer, ChevronRight, ChevronLeft, MoveRight as DragHandle, Wrench, Disc, Battery, ClipboardCheck, MoreHorizontal } from "lucide-react";
 import { motion } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
 
@@ -91,6 +91,66 @@ const servicePacks = [
         price: "Sob consulta"
       }
     ]
+  },
+  {
+    category: "MECÂNICA",
+    items: [
+      {
+        icon: Wrench,
+        name: "MUDANÇA DE ÓLEO E FILTROS",
+        features: [
+          "Substituição de óleo lubrificante de alta qualidade adequado ao motor",
+          "Substituição do respetivo filtro de óleo",
+          "Verificação de níveis e reposição de fluidos essenciais",
+          "Inspeção visual rápida de fugas no motor"
+        ],
+        price: "Sob orçamento"
+      },
+      {
+        icon: Disc,
+        name: "SUBSTITUIÇÃO DE TRAVÕES",
+        features: [
+          "Substituição de pastilhas de travão dianteiras e traseiras",
+          "Substituição de discos de travão de alta durabilidade",
+          "Limpeza e lubrificação técnica das pinças de travagem",
+          "Verificação da qualidade e nível do líquido de travões"
+        ],
+        price: "Sob orçamento"
+      },
+      {
+        icon: Battery,
+        name: "TROCA DE BATERIA",
+        features: [
+          "Diagnóstico computorizado do estado da bateria atual",
+          "Instalação de bateria nova premium recomendada para o veículo",
+          "Verificação do sistema de carga e alternador",
+          "Reciclagem ecológica e segura da bateria usada"
+        ],
+        price: "Sob orçamento"
+      },
+      {
+        icon: ClipboardCheck,
+        name: "REVISÕES GERAIS",
+        features: [
+          "Inspeção técnica detalhada de pontos de segurança cruciais",
+          "Verificação de folgas de suspensão, direção e transmissão",
+          "Diagnóstico eletrónico e leitura de códigos de avarias",
+          "Recomendações e relatório do estado geral do veículo"
+        ],
+        price: "Sob orçamento"
+      },
+      {
+        icon: MoreHorizontal,
+        name: "ENTRE OUTROS SERVIÇOS",
+        features: [
+          "Reparações mecânicas diversas sob medida",
+          "Diagnóstico de anomalias mecânicas ou elétricas",
+          "Manutenção corretiva e preventiva personalizada",
+          "Foco absoluto na segurança e máxima performance"
+        ],
+        price: "Sob orçamento"
+      }
+    ]
   }
 ];
 
@@ -151,71 +211,71 @@ interface Category {
 }
 
 const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const [constraints, setConstraints] = useState({ right: 0, left: 0 });
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isCarousel, setIsCarousel] = useState(false);
+  const [maxIndex, setMaxIndex] = useState(0);
 
   useEffect(() => {
     const checkLayout = () => {
-      setIsCarousel(window.innerWidth < 1024 || category.items.length > 3);
+      const carousel = window.innerWidth < 1024 || category.items.length > 3;
+      setIsCarousel(carousel);
+      
+      const max = window.innerWidth >= 1024 ? category.items.length - 3 : category.items.length - 1;
+      setMaxIndex(Math.max(0, max));
     };
     
     checkLayout();
     window.addEventListener('resize', checkLayout);
-
-    const updateConstraints = () => {
-      if (containerRef.current && innerRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const innerWidth = innerRef.current.scrollWidth;
-        setConstraints({ right: 0, left: Math.min(0, containerWidth - innerWidth) });
-      }
-    };
-
-    // Small delay to ensure DOM is ready and card widths are calculated
-    const timer = setTimeout(updateConstraints, 100);
-    window.addEventListener('resize', updateConstraints);
-
     return () => {
       window.removeEventListener('resize', checkLayout);
-      window.removeEventListener('resize', updateConstraints);
-      clearTimeout(timer);
     };
   }, [category.items.length]);
 
-  const handleDragEnd = (_: any, info: any) => {
-    if (!isCarousel) return;
-    
-    const threshold = 50; // Increased threshold for more intentional swipe
-    const velocity = info.velocity.x;
-    const offset = info.offset.x;
-
-    if (velocity < -threshold || offset < -threshold) {
-      const maxIndex = window.innerWidth >= 1024 ? category.items.length - 3 : category.items.length - 1;
-      if (activeIndex < maxIndex) {
-        setActiveIndex(prev => prev + 1);
-      }
-    } else if (velocity > threshold || offset > threshold) {
-      if (activeIndex > 0) {
-        setActiveIndex(prev => prev - 1);
+  const handleScroll = () => {
+    if (scrollRef.current && isCarousel) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const cardElement = scrollRef.current.firstElementChild?.firstElementChild as HTMLDivElement;
+      if (cardElement) {
+        const cardWidth = cardElement.offsetWidth;
+        if (cardWidth > 0) {
+          const newIndex = Math.round(scrollLeft / cardWidth);
+          if (newIndex !== activeIndex) {
+            setActiveIndex(newIndex);
+          }
+        }
       }
     }
   };
 
   const next = () => {
-    const maxIndex = window.innerWidth >= 1024 ? category.items.length - 3 : category.items.length - 1;
-    if (activeIndex < maxIndex) setActiveIndex(prev => prev + 1);
+    if (scrollRef.current) {
+      const cardElement = scrollRef.current.firstElementChild?.firstElementChild as HTMLDivElement;
+      if (cardElement) {
+        const cardWidth = cardElement.offsetWidth;
+        const nextIndex = Math.min(activeIndex + 1, maxIndex);
+        scrollRef.current.scrollTo({
+          left: nextIndex * cardWidth,
+          behavior: 'smooth'
+        });
+        setActiveIndex(nextIndex);
+      }
+    }
   };
 
   const prev = () => {
-    if (activeIndex > 0) setActiveIndex(prev => prev - 1);
-  };
-
-  // Calculate X position based on activeIndex and screen size
-  const getX = () => {
-    const cardWidth = isCarousel ? (window.innerWidth < 768 ? window.innerWidth * 0.85 : 400) : 400;
-    return isCarousel ? -activeIndex * cardWidth : 0;
+    if (scrollRef.current) {
+      const cardElement = scrollRef.current.firstElementChild?.firstElementChild as HTMLDivElement;
+      if (cardElement) {
+        const cardWidth = cardElement.offsetWidth;
+        const prevIndex = Math.max(activeIndex - 1, 0);
+        scrollRef.current.scrollTo({
+          left: prevIndex * cardWidth,
+          behavior: 'smooth'
+        });
+        setActiveIndex(prevIndex);
+      }
+    }
   };
 
   return (
@@ -226,30 +286,24 @@ const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
         <span className="w-8 md:w-12 h-[2px] bg-primary"></span>
       </h3>
 
-      <div className="relative" ref={containerRef}>
+      <div className="relative">
         {/* Drag Hint */}
         <div className={`absolute -top-12 right-0 flex items-center gap-2 text-[10px] font-black tracking-widest text-primary/40 uppercase animate-pulse ${!isCarousel ? 'hidden' : ''}`}>
-          <span>Arraste para ver mais</span>
+          <span>Deslize para ver mais</span>
           <DragHandle className="w-3 h-3" />
         </div>
 
-        <div className="overflow-hidden">
-          <motion.div 
-            ref={innerRef}
-            whileTap={isCarousel ? { cursor: "grabbing" } : {}}
-            drag={isCarousel ? "x" : false}
-            dragConstraints={isCarousel ? constraints : { left: 0, right: 0 }}
-            dragElastic={0.2}
-            dragMomentum={true}
-            dragDirectionLock={true}
-            onDragEnd={handleDragEnd}
-            animate={{ x: getX() }}
-            transition={{ type: "spring", stiffness: 350, damping: 30, mass: 0.8 }}
-            className={`border-t border-l border-white/10 flex ${isCarousel ? 'cursor-grab active:cursor-grabbing' : 'cursor-default lg:flex-wrap lg:justify-center mx-auto w-fit max-w-full'}`}
-            style={{ 
-              width: 'fit-content',
-              touchAction: isCarousel ? 'pan-y' : 'auto'
-            }}
+        <div 
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className={`overflow-x-auto scroll-smooth snap-x snap-mandatory ${isCarousel ? 'scrollbar-none' : 'overflow-x-hidden'}`}
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          <div 
+            className={`border-t border-l border-white/10 flex ${isCarousel ? 'w-max' : 'lg:flex-wrap lg:justify-center mx-auto w-fit max-w-full'}`}
           >
               {category.items.map((item, index) => (
                 <motion.div
@@ -258,7 +312,7 @@ const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className={`${isCarousel ? 'w-[85vw] md:w-[400px] flex-shrink-0' : 'w-full md:w-[400px] lg:flex-shrink-0'} p-10 border-r border-b border-white/10 hover:bg-white/[0.02] transition-all group relative overflow-hidden flex flex-col`}
+                  className={`${isCarousel ? 'w-[85vw] md:w-[400px] flex-shrink-0 snap-start' : 'w-full md:w-[400px] lg:flex-shrink-0'} p-10 border-r border-b border-white/10 hover:bg-white/[0.02] transition-all group relative overflow-hidden flex flex-col`}
                 >
                   <div className="flex items-start justify-between mb-8">
                     {item.icon && <item.icon className="w-10 h-10 text-primary group-hover:scale-110 transition-transform" />}
@@ -325,7 +379,7 @@ const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
         </div>
 
         {/* Navigation Arrows */}
@@ -339,8 +393,8 @@ const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
           </button>
           <button 
             onClick={next}
-            disabled={activeIndex >= (window.innerWidth >= 1024 ? category.items.length - 3 : category.items.length - 1)}
-            className={`p-3 border border-white/10 rounded-lg transition-all ${activeIndex >= (window.innerWidth >= 1024 ? category.items.length - 3 : category.items.length - 1) ? 'opacity-20 cursor-not-allowed' : 'hover:bg-primary hover:border-primary text-white'}`}
+            disabled={activeIndex >= maxIndex}
+            className={`p-3 border border-white/10 rounded-lg transition-all ${activeIndex >= maxIndex ? 'opacity-20 cursor-not-allowed' : 'hover:bg-primary hover:border-primary text-white'}`}
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -350,7 +404,7 @@ const DraggableCategory: React.FC<{ category: Category }> = ({ category }) => {
       </div>
     </div>
   );
-}
+};
 
 export default function Services() {
   return (
