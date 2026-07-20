@@ -64,7 +64,7 @@ export default function Navbar() {
           }
         }} className="flex items-center">
           <img 
-            src="https://drive.google.com/thumbnail?id=1RnM2wB_YRitiXOdqImEJhi99z8T2g3od&sz=w600" 
+            src="/logo-share.png" 
             alt="Renew Garage Logo" 
             className="h-8 md:h-12 w-auto brightness-0 invert" 
             referrerPolicy="no-referrer"
