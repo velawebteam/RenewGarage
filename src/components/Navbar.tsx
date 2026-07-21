@@ -50,6 +50,7 @@ export default function Navbar() {
     { name: "Serviços", href: "#servicos" },
     { name: "Resultados", href: "#antes-depois" },
     { name: "Galeria", href: "#workshop-gallery" },
+    { name: "FAQs", href: "#faq" },
     { name: "Contacto", href: "#contacto" },
   ];
 
