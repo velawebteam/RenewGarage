@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Car, Menu, X } from "lucide-react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,10 +65,9 @@ export default function Navbar() {
           }
         }} className="flex items-center">
           <img 
-            src="/logo-share.png" 
+            src={logo} 
             alt="Renew Garage Logo" 
             className="h-8 md:h-12 w-auto brightness-0 invert" 
-            referrerPolicy="no-referrer"
           />
         </Link>
 

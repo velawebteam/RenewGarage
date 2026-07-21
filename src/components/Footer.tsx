@@ -1,5 +1,6 @@
 import { Car, MapPin, Instagram, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function Footer() {
   return (
@@ -9,10 +10,9 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-1 flex flex-col items-center md:items-start">
             <Link to="/" className="mb-8 block">
               <img 
-                src="/logo-share.png" 
+                src={logo} 
                 alt="Renew Garage Logo" 
                 className="h-16 w-auto brightness-0 invert mx-auto md:mx-0" 
-                referrerPolicy="no-referrer"
               />
             </Link>
             <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.2em] leading-relaxed max-w-xs">
