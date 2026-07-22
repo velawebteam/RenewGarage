@@ -9,9 +9,10 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-1 flex flex-col items-center md:items-start">
             <Link to="/" className="mb-8 block">
               <img 
-                src="/logo.png" 
+                src="https://drive.google.com/thumbnail?id=1RnM2wB_YRitiXOdqImEJhi99z8T2g3od&sz=w600" 
                 alt="Renew Garage Logo" 
                 className="h-16 w-auto brightness-0 invert mx-auto md:mx-0" 
+                referrerPolicy="no-referrer"
               />
             </Link>
             <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.2em] leading-relaxed max-w-xs">
