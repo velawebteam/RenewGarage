@@ -9,6 +9,9 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-white antialiased font-sans font-normal overflow-x-hidden;
     scrollbar-width: none; /* Firefox */

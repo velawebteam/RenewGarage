@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Car, Menu, X } from "lucide-react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -126,28 +127,36 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-background border-t border-white/10 p-6 flex flex-col gap-6 items-center">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              className="text-lg font-bold uppercase tracking-widest"
-              onClick={(e) => handleNavClick(e, link.href)}
-            >
-              {link.name}
-            </a>
-          ))}
-          <a 
-            href="https://wa.me/351933503103" 
-            target="_blank" 
-            rel="noreferrer"
-            className="w-full bg-primary py-4 rounded-xl text-white font-bold flex items-center justify-center"
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden absolute top-full left-0 w-full bg-background border-t border-white/10 p-6 flex flex-col gap-6 items-center overflow-hidden"
           >
-            Agendar Agora
-          </a>
-        </div>
-      )}
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-lg font-bold uppercase tracking-widest"
+                onClick={(e) => handleNavClick(e, link.href)}
+              >
+                {link.name}
+              </a>
+            ))}
+            <a 
+              href="https://wa.me/351933503103" 
+              target="_blank" 
+              rel="noreferrer"
+              className="w-full bg-primary py-4 rounded-xl text-white font-bold flex items-center justify-center"
+            >
+              Agendar Agora
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

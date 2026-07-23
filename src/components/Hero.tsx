@@ -38,7 +38,7 @@ export default function Hero() {
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <a 
-              href="#galeria"
+              href="#workshop-gallery"
               className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest transition-all text-xs border-y border-r border-white/10 w-full sm:w-auto justify-center flex"
             >
               Ver Projetos
