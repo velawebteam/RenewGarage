@@ -22,10 +22,10 @@ export default function Hero() {
           className="max-w-none w-full"
         >
           <span className="block text-[10px] md:text-xs font-black tracking-[0.4em] text-white/50 mb-4 uppercase">
-            A sua Garagem de Detailing em Tavira
+            Renove o Brilho do seu Carro
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-[8vw] lg:text-[6.5vw] font-bold mb-8 tracking-tighter leading-[0.85] md:leading-[0.75] uppercase font-display max-w-[90%] md:max-w-none">
-            RENOVE O BRILHO DO SEU CARRO
+            DETALHE AUTOMÓVEL EM TAVIRA, ALGARVE
           </h1>
           <div className="flex flex-col sm:flex-row items-center sm:items-start justify-start gap-0">
             <a 
