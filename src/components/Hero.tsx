@@ -25,7 +25,7 @@ export default function Hero() {
             Renove o Brilho do seu Carro
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-[8vw] lg:text-[6.5vw] font-bold mb-8 tracking-tighter leading-[0.85] md:leading-[0.75] uppercase font-display max-w-[90%] md:max-w-none">
-            DETALHE AUTOMÓVEL EM TAVIRA, ALGARVE
+            CAR DETAILING EM TAVIRA, ALGARVE
           </h1>
           <div className="flex flex-col sm:flex-row items-center sm:items-start justify-start gap-0">
             <a 

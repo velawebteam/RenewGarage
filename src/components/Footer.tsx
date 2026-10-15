@@ -16,7 +16,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.2em] leading-relaxed max-w-xs">
-              PRECISÃO. PERFORMANCE. PROTEÇÃO. <br />TAVIRA, ALGARVE.
+              CAR DETAILING. MANUTENÇÃO, LAVAGEM, CORREÇÃO DE PINTURA, POLIMENTOS, MECÂNICA
             </p>
           </div>
 
